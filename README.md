@@ -17,7 +17,7 @@ Creating simple blog with MERN Stack
 - [x] Create Project with Frontend and API folders
 - [x] Install the main packages: Mongo, Express, React + Redux, Material UI, JWT
 - [x] Add basic user authentication (For admin 'Add Blog' feature) which can be extended to social login for users
-- [] Add Blog Functionality
-- [] Like and Share Functionality
-- [] Comments Functionality
-- [] Bundling and pushing to Heroku (or sud-reddy.tech)
+- [ ] Add Blog Functionality
+- [ ] Like and Share Functionality
+- [ ] Comments Functionality
+- [ ] Bundling and pushing to Heroku (or sud-reddy.tech)
