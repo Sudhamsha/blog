@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
@@ -9,6 +10,7 @@ class AddBlogForm extends React.Component {
     data: {
       title: '',
       content: '',
+      user: this.props.user,
     },
     loading: false,
     errors: {},
@@ -72,12 +74,12 @@ class AddBlogForm extends React.Component {
           label="Submit"
           onClick={this.handleSubmit}
         />
-          <Snackbar
-              open={this.state.errors.global ? this.state.errors.global : false}
-              message={this.state.errors.global ? this.state.errors.global : ''}
-              autoHideDuration={4000}
-              bodyStyle={{backgroundColor: "red"}}
-          />
+        <Snackbar
+          open={this.state.errors.global ? this.state.errors.global : false}
+          message={this.state.errors.global ? this.state.errors.global : ''}
+          autoHideDuration={4000}
+          bodyStyle={{ backgroundColor: 'red' }}
+        />
       </form>
     );
   }
@@ -85,6 +87,13 @@ class AddBlogForm extends React.Component {
 
 AddBlogForm.propTypes = {
   submit: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
-export default AddBlogForm;
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+  };
+}
+
+export default connect(mapStateToProps)(AddBlogForm);

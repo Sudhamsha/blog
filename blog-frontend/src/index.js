@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -21,16 +21,16 @@ const store = createStore(
 );
 
 if (localStorage.blogJWT) {
-    const user = { token: localStorage.blogJWT };
-    const decodedUser = jwtDecode(user.token);
-    user.role = decodedUser.role;
-    store.dispatch(userLoggedIn(user));
+  const user = { token: localStorage.blogJWT };
+  const decodedUser = jwtDecode(user.token);
+  user.role = decodedUser.role;
+  store.dispatch(userLoggedIn(user));
 }
 
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
-      <App />
+      <Route component={App} />
     </Provider>
   </BrowserRouter>,
   document.getElementById('root'),

@@ -26,3 +26,7 @@ body {
     width: 100%;
     font-size: 12px;
 }
+
+.Blog-Card {
+    margin-bottom: 10px;
+}
