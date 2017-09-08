@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 mongoose.Promise = Promise;
 mongoose.connect(process.env.MONGODB_URL, { useMongoClient: true });
 
+app.use(express.static('build'));
 app.use('/api/auth', auth);
 app.use('/api/blog', blog);
 
