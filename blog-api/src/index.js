@@ -19,7 +19,7 @@ app.use('/api/auth', auth);
 app.use('/api/blog', blog);
 
 app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'build/index.html'));
 });
 
 app.listen(8181, () => console.log('Listening on 8181!')); // eslint-disable-line
