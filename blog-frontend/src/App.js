@@ -8,6 +8,7 @@ import FooterBlock from './components/blocks/FooterBlock';
 import HomePage from './components/pages/HomePage';
 import LoginPage from './components/pages/LoginPage';
 import AddBlogPage from './components/pages/AddBlogPage';
+import BlogItemPage from './components/pages/BlogItemPage';
 import AdminRoute from './Routes/AdminRoute';
 
 const App = ({ location }) => (
@@ -23,6 +24,7 @@ const App = ({ location }) => (
           exact
           component={AddBlogPage}
         />
+        <Route location={location} path="/blog/:id" exact component={BlogItemPage} />
       </Paper>
       <FooterBlock />
     </div>
