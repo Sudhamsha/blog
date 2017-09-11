@@ -24,7 +24,7 @@ class HeaderBlock extends React.Component {
         <AppBar
           title={
             <Link to="/" className="Main-Title">
-              Blog
+              Sud Reddy
             </Link>
           }
           onLeftIconButtonTouchTap={this.handleToggle}

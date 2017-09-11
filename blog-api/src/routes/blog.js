@@ -46,4 +46,11 @@ router.post('/:id', (req, res) => {
   });
 });
 
+router.delete('/:id', (req, res) => {
+    const id = req.params.id;
+    Blog.findOneAndRemove({ _id: id }, function(err) {
+        res.json({ data: "Blog has been deleted Successfully!" });
+    });
+});
+
 export default router;

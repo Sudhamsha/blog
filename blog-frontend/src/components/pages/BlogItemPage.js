@@ -3,9 +3,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CardHeader, CardText } from 'material-ui/Card';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 import ArrowLeft from 'material-ui/svg-icons/navigation/arrow-back';
 import EditIcon from 'material-ui/svg-icons/image/edit';
-import { updateBlog, getBlogItem } from '../../actions/blog';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import { updateBlog, getBlogItem, deleteItem } from '../../actions/blog';
 import EditBlogForm from '../forms/EditBlogForm';
 
 class BlogItemPage extends React.Component {
@@ -14,9 +17,18 @@ class BlogItemPage extends React.Component {
       title: '',
       content: '',
       user: {},
-        _id: ''
+      _id: '',
     },
     isEditable: false,
+    open: false,
+  };
+
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
   };
 
   componentWillMount() {
@@ -25,8 +37,8 @@ class BlogItemPage extends React.Component {
       .then(() => this.setState({ blog: this.props.blog.data }));
   }
 
-  componentWillReceiveProps(newProps){
-      this.setState({ blog: newProps.blog.data })
+  componentWillReceiveProps(newProps) {
+    this.setState({ blog: newProps.blog.data });
   }
 
   toggleUpdateForm = () => {
@@ -34,9 +46,30 @@ class BlogItemPage extends React.Component {
   };
 
   submit = data =>
-    this.props.updateBlog(data).then(() => this.setState({ isEditable: !this.state.isEditable }));
+    this.props
+      .updateBlog(data)
+      .then(() => this.setState({ isEditable: !this.state.isEditable }));
+
+  deleteBlog = () =>
+    this.props
+      .deleteItem(this.state.blog._id)
+      .then(() => this.props.history.push('/'));
 
   render() {
+      const actions = [
+          <FlatButton
+              label="Cancel"
+              primary={true}
+              onClick={this.handleClose}
+          />,
+          <FlatButton
+              label="Submit"
+              onClick={this.deleteBlog}
+              style={{color: '#fff'}}
+              backgroundColor="#f44336"
+          />,
+      ];
+
     return (
       <div>
         <FloatingActionButton
@@ -49,13 +82,33 @@ class BlogItemPage extends React.Component {
           <ArrowLeft />
         </FloatingActionButton>
         {this.props.role === 'admin' && (
-          <FloatingActionButton
-            mini={true}
-            className="Icon-Left"
-            onClick={this.toggleUpdateForm}
-          >
-            <EditIcon />
-          </FloatingActionButton>
+          <div>
+            <FloatingActionButton
+              mini={true}
+              className="Icon-Left"
+              backgroundColor="#FF9800"
+              onClick={this.toggleUpdateForm}
+            >
+              <EditIcon />
+            </FloatingActionButton>
+            <FloatingActionButton
+              mini={true}
+              backgroundColor="#f44336"
+              className="Icon-Left"
+              onClick={this.handleOpen}
+            >
+              <DeleteIcon />
+            </FloatingActionButton>
+              <Dialog
+                  title="Are you sure?"
+                  actions={actions}
+                  modal={false}
+                  open={this.state.open}
+                  onRequestClose={this.handleClose}
+              >
+                  Please click Submit to delete.
+              </Dialog>
+          </div>
         )}
         {!this.state.isEditable && (
           <div>
@@ -63,7 +116,9 @@ class BlogItemPage extends React.Component {
               title={this.state.blog.title}
               subtitle={this.state.blog.user.email}
             />
-            <CardText className="Display-Linebreak">{this.state.blog.content}</CardText>
+            <CardText className="Display-Linebreak">
+              {this.state.blog.content}
+            </CardText>
           </div>
         )}
 
@@ -84,6 +139,7 @@ BlogItemPage.propTypes = {
   }).isRequired,
   getBlogItem: PropTypes.func.isRequired,
   updateBlog: PropTypes.func.isRequired,
+  deleteItem: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -104,6 +160,8 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { getBlogItem, updateBlog })(
-  BlogItemPage,
-);
+export default connect(mapStateToProps, {
+  getBlogItem,
+  updateBlog,
+  deleteItem,
+})(BlogItemPage);

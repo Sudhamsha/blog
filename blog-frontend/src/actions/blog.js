@@ -1,4 +1,4 @@
-import { ADD_BLOG, GET_ALL_BLOGS, GET_BLOG } from '../types';
+import { ADD_BLOG, GET_ALL_BLOGS, GET_BLOG, DELETED_BLOG } from '../types';
 import api from '../api';
 
 export const addBlog = data => ({
@@ -14,6 +14,11 @@ export const getBlogs = data => ({
 export const getBlog = data => ({
     type: GET_BLOG,
     data,
+});
+
+export const deletedBlog = (data) => ({
+    type: DELETED_BLOG,
+    data
 });
 
 export const addNewBlog = data => dispatch =>
@@ -34,4 +39,9 @@ export const getAllBlogs = () => dispatch =>
 export const getBlogItem = id => dispatch =>
     api.blog.getBlog(id).then(blog => {
         dispatch(getBlog(blog));
+    });
+
+export const deleteItem = id => dispatch =>
+    api.blog.delete(id).then((res) => {
+        dispatch(deletedBlog(res.data));
     });
