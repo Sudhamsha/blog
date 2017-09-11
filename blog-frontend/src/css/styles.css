@@ -39,3 +39,7 @@ body {
 .Blog-Link {
 
 }
+
+.Display-Linebreak {
+    white-space: pre-line;
+}

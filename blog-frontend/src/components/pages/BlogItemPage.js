@@ -63,7 +63,7 @@ class BlogItemPage extends React.Component {
               title={this.state.blog.title}
               subtitle={this.state.blog.user.email}
             />
-            <CardText>{this.state.blog.content}</CardText>
+            <CardText className="Display-Linebreak">{this.state.blog.content}</CardText>
           </div>
         )}
 
