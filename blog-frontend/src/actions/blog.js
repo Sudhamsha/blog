@@ -21,6 +21,11 @@ export const addNewBlog = data => dispatch =>
         dispatch(addBlog(newData));
     });
 
+export const updateBlog = data => dispatch =>
+    api.blog.update(data).then(newData => {
+        dispatch(dispatch(getBlog(newData)));
+    });
+
 export const getAllBlogs = () => dispatch =>
     api.blog.getAll().then(newData => {
         dispatch(getBlogs(newData));

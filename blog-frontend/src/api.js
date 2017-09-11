@@ -9,5 +9,6 @@ export default {
     getAll: () => axios.get('/api/blog').then(res => res.data),
     getBlog: id => axios.post('/api/blog/' + id, {}).then(res => res.data),
     add: data => axios.post('/api/blog', { data }).then(res => res.data),
+    update: data => axios.put('/api/blog', { data }).then(res => res.data),
   },
 };

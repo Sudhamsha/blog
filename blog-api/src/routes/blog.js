@@ -24,10 +24,25 @@ router.post('/', (req, res) => {
     .catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
 });
 
+router.put('/', (req, res) => {
+  const { data } = req.body;
+  Blog.findOneAndUpdate(
+    { _id: data._id },
+    {
+      title: data.title,
+      content: data.content,
+      user: jwtDecode(data.user.token),
+    },
+    { new: true },
+  )
+    .then(blogRecord => res.json({ data: blogRecord }))
+    .catch(err => res.status(400).json({ errors: parseErrors(err.errors) }));
+});
+
 router.post('/:id', (req, res) => {
   const id = req.params.id;
   Blog.find({ _id: id }, function(err, blog) {
-    res.json(blog[0]);
+    res.json({ data: blog[0] });
   });
 });
 

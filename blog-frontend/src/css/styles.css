@@ -31,8 +31,9 @@ body {
     margin-bottom: 10px;
 }
 
-.Arrow-Left {
+.Icon-Left {
     float: right;
+    margin: 0 3px 0 3px;
 }
 
 .Blog-Link {
