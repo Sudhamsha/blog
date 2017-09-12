@@ -20,6 +20,8 @@ Creating simple blog with MERN Stack
 - [x] Add Blog Functionality
 - [x] Update Blog Functionality
 - [x] Remove Blog Functionality
+- [ ] Add morgan for request logging
+- [ ] Use Auth0 for authentication
 - [ ] Like and Share Functionality
 - [ ] Comments Functionality
 - [ ] Bundling and pushing to Heroku (or sud-reddy.tech)
