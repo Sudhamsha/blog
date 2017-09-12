@@ -17,6 +17,7 @@ router.post('/', (req, res) => {
     title: data.title,
     content: data.content,
     user: jwtDecode(data.user.token),
+    categories: data.categories ? data.categories : [],
   });
   blog
     .save()
@@ -32,6 +33,7 @@ router.put('/', (req, res) => {
       title: data.title,
       content: data.content,
       user: jwtDecode(data.user.token),
+      categories: data.categories,
     },
     { new: true },
   )
@@ -47,10 +49,10 @@ router.post('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-    const id = req.params.id;
-    Blog.findOneAndRemove({ _id: id }, function(err) {
-        res.json({ data: "Blog has been deleted Successfully!" });
-    });
+  const id = req.params.id;
+  Blog.findOneAndRemove({ _id: id }, function(err) {
+    res.json({ data: 'Blog has been deleted Successfully!' });
+  });
 });
 
 export default router;

@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import PropTypes from 'prop-types';
+
+const categories = ['development', 'mern', 'testing', 'sud'];
 
 class EditBlogForm extends React.Component {
   state = {
@@ -12,6 +16,7 @@ class EditBlogForm extends React.Component {
       content: this.props.blog.content,
       _id: this.props.blog._id,
       user: this.props.user,
+      categories: this.props.blog.categories,
     },
     loading: false,
     errors: {},
@@ -21,6 +26,12 @@ class EditBlogForm extends React.Component {
     this.setState({
       data: { ...this.state.data, [e.target.name]: e.target.value },
     });
+
+    onSelectChange = (e, i, values) => {
+        this.setState({
+            data: { ...this.state.data, categories: values },
+        });
+    };
 
   handleSubmit = () => {
     const errors = this.validate(this.state.data);
@@ -43,6 +54,19 @@ class EditBlogForm extends React.Component {
 
     return errors;
   };
+
+    menuItems = values => {
+        return categories.map(name => (
+            <MenuItem
+                key={name}
+                insetChildren={true}
+                checked={values && values.indexOf(name) > -1}
+                value={name}
+                primaryText={name}
+            />
+        ));
+    };
+
   render() {
     return (
       <form>
@@ -72,6 +96,18 @@ class EditBlogForm extends React.Component {
             errorText={this.state.errors.content}
           />
         </div>
+          <div>
+              <SelectField
+                  multiple={true}
+                  fullWidth
+                  name="categories"
+                  hintText="Category"
+                  value={this.state.data.categories}
+                  onChange={this.onSelectChange}
+              >
+                  {this.menuItems(this.state.data.categories)}
+              </SelectField>
+          </div>
         <RaisedButton
           primary={true} // eslint-disable-line
           label="Update"

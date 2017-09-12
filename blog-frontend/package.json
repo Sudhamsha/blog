@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apim/auth0-lock-redux": "^1.0.2",
     "axios": "^0.16.2",
     "jwt-decode": "^2.2.0",
     "material-ui": "^0.19.1",

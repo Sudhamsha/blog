@@ -43,3 +43,18 @@ body {
 .Display-Linebreak {
     white-space: pre-line;
 }
+
+.HomeFav-Icon {
+    float: left;
+    margin-top: -4px;
+}
+
+.Chip-Wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 2px 16px 2px 7px !important;
+}
+
+.Category-Chip {
+    margin: 4px !important;
+}

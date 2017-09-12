@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import PropTypes from 'prop-types';
+
+const categories = ['development', 'mern', 'testing', 'sud'];
 
 class AddBlogForm extends React.Component {
   state = {
@@ -11,6 +15,7 @@ class AddBlogForm extends React.Component {
       title: '',
       content: '',
       user: this.props.user,
+      categories: [],
     },
     loading: false,
     errors: {},
@@ -20,6 +25,12 @@ class AddBlogForm extends React.Component {
     this.setState({
       data: { ...this.state.data, [e.target.name]: e.target.value },
     });
+
+  onSelectChange = (e, i, values) => {
+    this.setState({
+      data: { ...this.state.data, categories: values },
+    });
+  };
 
   handleSubmit = () => {
     const errors = this.validate(this.state.data);
@@ -42,6 +53,19 @@ class AddBlogForm extends React.Component {
 
     return errors;
   };
+
+  menuItems = values => {
+    return categories.map(name => (
+      <MenuItem
+        key={name}
+        insetChildren={true}
+        checked={values && values.indexOf(name) > -1}
+        value={name}
+        primaryText={name}
+      />
+    ));
+  };
+
   render() {
     return (
       <form>
@@ -51,7 +75,7 @@ class AddBlogForm extends React.Component {
             type="text"
             hintText="Title"
             floatingLabelText="Title"
-            fullWidth={true} // eslint-disable-line
+            fullWidth
             onChange={this.onChange}
             errorText={this.state.errors.title}
           />
@@ -63,11 +87,23 @@ class AddBlogForm extends React.Component {
             hintText="Content"
             floatingLabelText="Content"
             rows={5}
-            multiLine={true} // eslint-disable-line
-            fullWidth={true} // eslint-disable-line
+            multiLine
+            fullWidth
             onChange={this.onChange}
             errorText={this.state.errors.content}
           />
+        </div>
+        <div>
+          <SelectField
+            multiple={true}
+            fullWidth
+            name="categories"
+            hintText="Category"
+            value={this.state.data.categories}
+            onChange={this.onSelectChange}
+          >
+            {this.menuItems(this.state.data.categories)}
+          </SelectField>
         </div>
         <RaisedButton
           primary={true} // eslint-disable-line

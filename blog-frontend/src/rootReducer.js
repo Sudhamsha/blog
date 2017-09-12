@@ -5,5 +5,5 @@ import blog from './reducers/blog';
 
 export default combineReducers({
     user,
-    blog
+    blog,
 });

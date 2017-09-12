@@ -15,9 +15,11 @@ import './css/styles.css';
 
 injectTapEventPlugin();
 
+const middlewares = [thunk];
+
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(thunk)),
+  composeWithDevTools(applyMiddleware(...middlewares)),
 );
 
 if (localStorage.blogJWT) {

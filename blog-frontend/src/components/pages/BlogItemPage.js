@@ -8,6 +8,7 @@ import FlatButton from 'material-ui/FlatButton';
 import ArrowLeft from 'material-ui/svg-icons/navigation/arrow-back';
 import EditIcon from 'material-ui/svg-icons/image/edit';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import Chip from 'material-ui/Chip';
 import { updateBlog, getBlogItem, deleteItem } from '../../actions/blog';
 import EditBlogForm from '../forms/EditBlogForm';
 
@@ -17,6 +18,7 @@ class BlogItemPage extends React.Component {
       title: '',
       content: '',
       user: {},
+      categories: [],
       _id: '',
     },
     isEditable: false,
@@ -56,19 +58,15 @@ class BlogItemPage extends React.Component {
       .then(() => this.props.history.push('/'));
 
   render() {
-      const actions = [
-          <FlatButton
-              label="Cancel"
-              primary={true}
-              onClick={this.handleClose}
-          />,
-          <FlatButton
-              label="Submit"
-              onClick={this.deleteBlog}
-              style={{color: '#fff'}}
-              backgroundColor="#f44336"
-          />,
-      ];
+    const actions = [
+      <FlatButton label="Cancel" primary={true} onClick={this.handleClose} />,
+      <FlatButton
+        label="Submit"
+        onClick={this.deleteBlog}
+        style={{ color: '#fff' }}
+        backgroundColor="#f44336"
+      />,
+    ];
 
     return (
       <div>
@@ -99,15 +97,15 @@ class BlogItemPage extends React.Component {
             >
               <DeleteIcon />
             </FloatingActionButton>
-              <Dialog
-                  title="Are you sure?"
-                  actions={actions}
-                  modal={false}
-                  open={this.state.open}
-                  onRequestClose={this.handleClose}
-              >
-                  Please click Submit to delete.
-              </Dialog>
+            <Dialog
+              title="Are you sure?"
+              actions={actions}
+              modal={false}
+              open={this.state.open}
+              onRequestClose={this.handleClose}
+            >
+              Please click Submit to delete.
+            </Dialog>
           </div>
         )}
         {!this.state.isEditable && (
@@ -119,6 +117,16 @@ class BlogItemPage extends React.Component {
             <CardText className="Display-Linebreak">
               {this.state.blog.content}
             </CardText>
+            {this.state.blog.categories &&
+            this.state.blog.categories.length > 0 && (
+              <CardText className="Chip-Wrapper">
+                {this.state.blog.categories.map(category => (
+                  <Chip key={category} className="Category-Chip">
+                    {category}
+                  </Chip>
+                ))}
+              </CardText>
+            )}
           </div>
         )}
 
